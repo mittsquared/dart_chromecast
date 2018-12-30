@@ -45,10 +45,10 @@ class CastDevice extends ChangeNotifier {
   }
 
   CastDeviceType get deviceType {
-    if (type.startsWith('_googlecast._tcp')) {
+    if (type.startsWith('._googlecast._tcp')) {
       return CastDeviceType.ChromeCast;
     }
-    else if (type.startsWith('_airplay._tcp')) {
+    else if (type.startsWith('._airplay._tcp')) {
       return CastDeviceType.AppleTV;
     }
     return CastDeviceType.Unknown;
