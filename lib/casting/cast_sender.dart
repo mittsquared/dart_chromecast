@@ -99,7 +99,7 @@ class CastSender extends Object {
   Future<bool> disconnect() async {
     if (null != _connectionChannel && null != _castSession) {
       _connectionChannel.sendMessage({
-        'type': 'CLOSE',
+        'type': 'STOP',
         'sessionId': _castSession.castMediaStatus.sessionId,
       });
       return await _waitForDisconnection();
