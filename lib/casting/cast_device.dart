@@ -12,7 +12,6 @@ enum CastDeviceType {
 }
 
 class CastDevice extends ChangeNotifier {
-
   final String name;
   final String type;
   final String host;
@@ -34,55 +33,42 @@ class CastDevice extends ChangeNotifier {
 
   String _friendlyName;
 
-  CastDevice({
-    this.name,
-    this.type,
-    this.host,
-    this.port,
-    this.attr
-  }) {
-
-    initDeviceInfo();
-
+  CastDevice({this.name, this.type, this.host, this.port, this.attr}) {
+//    initDeviceInfo();
   }
 
-  void initDeviceInfo() async {
-    if (CastDeviceType.ChromeCast == deviceType) {
-      if (null != attr && null != attr['fn']) {
-        _friendlyName = utf8.decode(attr['fn']);
-      }
-      else {
-        // Attributes are not guaranteed to be set, if not set fetch them via the eureka_info url
-        // Possible parameters: version,audio,name,build_info,detail,device_info,net,wifi,setup,settings,opt_in,opencast,multizone,proxy,night_mode_params,user_eq,room_equalizer
-        try {
-          http.Response response = await http.get(
-              'http://${host}:8008/setup/eureka_info?params=name,device_info');
-          Map deviceInfo = jsonDecode(response.body);
-          _friendlyName = deviceInfo['name'];
-        }
-        catch(exception) {
-          _friendlyName = 'Unknown';
-        }
-      }
-    }
-    notifyChange();
-  }
+//  void initDeviceInfo() async {
+//    notifyChange();
+//  }
 
   CastDeviceType get deviceType {
-    if (type.startsWith('._googlecast._tcp')) {
+    if (type.contains('googlecast')) {
       return CastDeviceType.ChromeCast;
-    }
-    else if (type.startsWith('._airplay._tcp')) {
+    } else if (type.contains('airplay')) {
       return CastDeviceType.AppleTV;
     }
     return CastDeviceType.Unknown;
   }
 
-  String get friendlyName {
-    if (null != _friendlyName) {
-      return _friendlyName;
+  Future<String> get friendlyName async {
+    if (null == _friendlyName) {
+      if (CastDeviceType.ChromeCast == deviceType) {
+        if (null != attr && null != attr['fn']) {
+          _friendlyName = utf8.decode(attr['fn']);
+        } else {
+          // Attributes are not guaranteed to be set, if not set fetch them via the eureka_info url
+          // Possible parameters: version,audio,name,build_info,detail,device_info,net,wifi,setup,settings,opt_in,opencast,multizone,proxy,night_mode_params,user_eq,room_equalizer
+          try {
+            http.Response response = await http.get(
+                'http://${host}:8008/setup/eureka_info?params=name,device_info');
+            Map deviceInfo = jsonDecode(response.body);
+            _friendlyName = deviceInfo['name'];
+          } catch (exception) {
+            _friendlyName = null;
+          }
+        }
+      }
     }
-    return name;
+    return _friendlyName;
   }
-
 }

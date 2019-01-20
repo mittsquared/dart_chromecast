@@ -98,10 +98,10 @@ class CastSender extends Object {
   }
 
   Future<bool> disconnect() async {
-    if (null != _connectionChannel && null != _castSession?.castMediaStatus) {
+    if (null != _connectionChannel /*&& null != _castSession?.castMediaStatus*/) {
       _connectionChannel.sendMessage({
         'type': 'CLOSE',
-        'sessionId': _castSession.castMediaStatus.sessionId,
+//        'sessionId': _castSession.castMediaStatus.sessionId,
       });
     }
     if (null != _socket) {

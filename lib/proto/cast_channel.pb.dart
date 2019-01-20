@@ -5,7 +5,7 @@
 library extensions.api.cast_channel_cast_channel;
 
 // ignore: UNUSED_SHOWN_NAME
-import 'dart:core' show int, bool, double, String, List, override;
+import 'dart:core' show Invocation, List, String, bool, double, int, override;
 
 import 'package:protobuf/protobuf.dart';
 
@@ -80,6 +80,8 @@ class CastMessage extends GeneratedMessage {
   set noIdea(int v) { setField(8, v); }
   bool hasNoIdea() => $_has(8);
   void clearNoIdea() => clearField(8);
+
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _ReadonlyCastMessage extends CastMessage with ReadonlyMessageMixin {}
@@ -104,6 +106,8 @@ class AuthChallenge extends GeneratedMessage {
   static void $checkItem(AuthChallenge v) {
     if (v is! AuthChallenge) checkItemFailed(v, 'AuthChallenge');
   }
+
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _ReadonlyAuthChallenge extends AuthChallenge with ReadonlyMessageMixin {}
@@ -142,6 +146,8 @@ class AuthResponse extends GeneratedMessage {
   void clearClientAuthCertificate() => clearField(2);
 
   List<List<int>> get clientCa => $_getList(2);
+
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _ReadonlyAuthResponse extends AuthResponse with ReadonlyMessageMixin {}
@@ -171,6 +177,8 @@ class AuthError extends GeneratedMessage {
   set errorType(AuthError_ErrorType v) { setField(1, v); }
   bool hasErrorType() => $_has(0);
   void clearErrorType() => clearField(1);
+
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _ReadonlyAuthError extends AuthError with ReadonlyMessageMixin {}
@@ -212,6 +220,8 @@ class DeviceAuthMessage extends GeneratedMessage {
   set error(AuthError v) { setField(3, v); }
   bool hasError() => $_has(2);
   void clearError() => clearField(3);
+
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class _ReadonlyDeviceAuthMessage extends DeviceAuthMessage with ReadonlyMessageMixin {}
